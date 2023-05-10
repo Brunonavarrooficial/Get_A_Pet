@@ -2,8 +2,10 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
+
 const createUserToken = require('../helpers/create-user-token')
 const getToken = require('../helpers/get-token')
+const getUserByToken = require('../helpers/get-user-by-token')
 class UserController {
     static async register(req, res) {
         const { name, email, phone, password, confirmpassword } = req.body
@@ -119,10 +121,63 @@ class UserController {
     }
 
     static async editUser(req, res) {
-        res.status(200).json({
-            message: 'Deu certo update!'
-        })
-        return
+        const id = req.params.id
+
+        const token = getToken(req)
+        const user = await getUserByToken(token)
+
+        const { name, email, phone, password, confirmpassword } = req.body
+
+        let image = ''
+
+        if (!name) {
+            res.status(422).json({ message: 'O nome é obrigatório' })
+            return
+        }
+        user.name = name
+
+        if (!email) {
+            res.status(422).json({ message: 'O E-mail é obrigatório' })
+            return
+        }
+        const userExists = await User.findOne({ email: email })
+        if (user.email !== email && userExists) {
+            res.status(422).json({ message: 'Por Favor Ultilize outro E-mail!' })
+            return
+        }
+        user.email = email
+
+        if (!phone) {
+            res.status(422).json({ message: 'O  telefone é obrigatório' })
+            return
+        }
+
+        if (password !== confirmpassword) {
+            res.status(422).json({ message: 'A senha e a confirmação da senha precisam ser iguais' })
+            return
+        } else if (password === confirmpassword && password != null) {
+
+            const salt = await bcrypt.genSalt(12)
+            const passwordHash = await bcrypt.hash(password, salt)
+
+            user.password = passwordHash
+        }
+
+        try {
+            await User.findOneAndUpdate(
+                { _id: user._id },
+                { $set: user },
+                { new: true },
+            )
+
+            res.status(200).json({
+                message: 'Usuário atualizado com sucesso!'
+            })
+        } catch (error) {
+            res.status(500).json({ message: error })
+        }
+
+
     }
 }
 
