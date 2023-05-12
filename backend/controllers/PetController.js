@@ -278,10 +278,7 @@ class PetController {
         res.status(200).json({
             message: `Parabéns ${pet.adopter.name} o ciclo de adoção do ${pet.name} foi concluido com sucesso!`
         })
-
     }
-
-
 }
 
 module.exports = PetController
