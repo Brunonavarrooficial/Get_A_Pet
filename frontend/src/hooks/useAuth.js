@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import useFlashMessage from './useFlashMessage'
+
 import api from '../utils/api'
 
 export default function useAuth() {
+    const { setFlashMessage } = useFlashMessage()
 
     async function register(user) {
+
+        let msgText = 'Cadastro realizado co sucesso!'
+        let msgType = 'Success'
 
         try {
             const data = await api.post('/users/register', user)
@@ -14,8 +20,11 @@ export default function useAuth() {
             console.log(data)
 
         } catch (error) {
-            console.log(error)
+            msgText = error.response.data.message
+            msgType = 'error'
         }
+
+        setFlashMessage(msgText, msgType)
     }
 
     return { register }
