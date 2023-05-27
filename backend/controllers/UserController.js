@@ -153,7 +153,7 @@ class UserController {
             res.status(422).json({ message: 'O  telefone é obrigatório' })
             return
         }
-
+        user.phone = phone
         if (password !== confirmpassword) {
             res.status(422).json({ message: 'A senha e a confirmação da senha precisam ser iguais' })
             return
