@@ -10,7 +10,9 @@ import Login from './components/pages/Auth/Login';
 import Register from './components/pages/Auth/Register';
 import Profile from './components/pages/User/Profile';
 import MyPets from './components/pages/Pet/MyPets';
-import AddPet from './components/pages/Pet/AddPet';
+import AddPet from './components/pages/Pet/AddNewPet';
+
+
 
 
 import { UserProvider } from './context/UserContext';
