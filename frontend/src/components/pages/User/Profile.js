@@ -69,7 +69,7 @@ export default function Profile() {
                 <h1>Perfil</h1>
                 {(user.image || preview) && (
                     <RoundedImage src={
-                        preview ? URL.createObjectURL(preview) : `${process.env.REACT_APP_API}/images/users/${user.image}`}
+                        preview ? URL.createObjectURL(preview) : `${process.env.REACT_APP_API}images/users/${user.image}`}
                         alt={user.name}
                     />
                 )}
