@@ -239,7 +239,7 @@ class PetController {
         }
 
         pet.adopter = {
-            _id: user.id,
+            _id: user._id,
             name: user.name,
             image: user.image
         }

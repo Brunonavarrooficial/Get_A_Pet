@@ -75,11 +75,19 @@
 
 .actions .conclude_btn {
     color: #25b456;
-    border: #25b456;
+    border: 2px solid #25b456;
 
 }
 
 .actions .conclude_btn:hover {
     color: #fff;
     background-color: #25b456;
+}
+
+.contacts {
+    margin-left: 2em;
+}
+
+.contacts p {
+    margin-bottom: .5em;
 }

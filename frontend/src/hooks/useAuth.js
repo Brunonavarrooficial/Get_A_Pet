@@ -19,6 +19,15 @@ export default function useAuth() {
         }
     }, [])
 
+    async function authUser(data) {
+
+        setAuthenticated(true)
+
+        localStorage.setItem('token', JSON.stringify(data.token))
+
+        navigate('/')
+    }
+
     async function register(user) {
 
         let msgText = 'Cadastro realizado com sucesso!'
@@ -57,14 +66,6 @@ export default function useAuth() {
         setFlashMessage(msgText, msgType)
     }
 
-    async function authUser(data) {
-
-        setAuthenticated(true)
-
-        localStorage.setItem('token', JSON.stringify(data.token))
-
-        navigate('/')
-    }
 
     function logout() {
         const msgText = 'Logout realizado com sucesso!'
