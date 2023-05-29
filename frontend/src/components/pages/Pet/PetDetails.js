@@ -15,7 +15,7 @@ export function PetDetails() {
     const [token] = useState(localStorage.getItem('token') || '')
 
     useEffect(() => {
-        api.get(`pets/${id}`).then((response) => {
+        api.get(`/pets/${id}`).then((response) => {
             setPet(response.data.pet)
         })
     }, [id])
@@ -23,9 +23,13 @@ export function PetDetails() {
     async function schedule() {
         let msgType = 'success'
 
-        const data = await api.patch(`pets/schedule/${pet._id}`, {
-            Authorization: `Bearer ${JSON.parse(token)}`
-        })
+        const data = await api
+            .patch(`/pets/schedule/${pet._id}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`,
+                    'Content-Type': 'multipart/form-data'
+                },
+            })
             .then((response) => {
                 return response.data
             })
